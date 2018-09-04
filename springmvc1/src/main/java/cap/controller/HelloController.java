@@ -14,6 +14,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class HelloController {
+    /**
+     * 使用get方式
+     * @return ModelAndView
+     */
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public ModelAndView test() {
         ModelAndView modelAndView = new ModelAndView();
@@ -21,6 +25,12 @@ public class HelloController {
         return modelAndView;
     }
 
+    /**
+     * 使用post方式
+     * 返回字符串
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public String test(Model model) {
         model.addAttribute("data", "SpringMVC");
@@ -48,4 +58,17 @@ public class HelloController {
         return map;
     }
 
+    @RequestMapping(value = "sayHi", method = RequestMethod.POST)
+    public String hello(HttpServletRequest request, Model model, @RequestParam("name") String username) {
+        String nameByRequest = request.getParameter("name");
+        model.addAttribute("nameByReuest", nameByRequest);
+        model.addAttribute("username", username);
+        return "result";
+
+    }
+
+    @RequestMapping(value = "/sayHi", method = RequestMethod.GET)
+    public String hello() {
+        return "sayHi";
+    }
 }
